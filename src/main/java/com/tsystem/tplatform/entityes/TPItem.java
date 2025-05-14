@@ -15,7 +15,7 @@ import com.tsystem.tplatform.security.TPUser;
 
 /**
  *
- * @author mrbis
+ * @author Bishop
  */
 @Entity
 @Table(name = "tpithem")
@@ -24,138 +24,226 @@ public class TPItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // Идентефикатор
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
+    // Наименование
     @Column(name = "title")
     private String title;
-    
+
+    // Когда создано
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @ManyToOne    
+    // Кем создано
+    @ManyToOne
     @JoinColumn(name = "createdBy", referencedColumnName = "id")
     private TPUser createdBy;
-    
+
+    // Дата последнего изменения
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
-    @ManyToOne    
+    // Кем изменено
+    @ManyToOne
     @JoinColumn(name = "updatedBy", referencedColumnName = "id")
     private TPUser updatedBy;
-    
+
+    // Номер версии
     @Version
     @Column(name = "version")
     private int version;
-    
+
+    // Родительный обьекты от которых наследуюся разришения
     @ManyToMany
-	@JoinTable(name = "parentTPItem", 
-	      joinColumns = @JoinColumn(name = "tpitem_id"), 
-	      inverseJoinColumns = @JoinColumn(name = "parentTPItem_id"))
+    @JoinTable(name = "parentTPItem",
+            joinColumns = @JoinColumn(name = "tpitem_id"),
+            inverseJoinColumns = @JoinColumn(name = "parentTPItem_id"))
     private Set<TPItem> paretTPItem;
 
+    // Жетоны безопасности
     @ManyToMany
-	@JoinTable(name = "SecurityToken_DefinitionBindingCollection", 
-	      joinColumns = @JoinColumn(name = "tpitem_id"), 
-	      inverseJoinColumns = @JoinColumn(name = "tpsecurityToken_id"))
+    @JoinTable(name = "SecurityToken_DefinitionBindingCollection",
+            joinColumns = @JoinColumn(name = "tpitem_id"),
+            inverseJoinColumns = @JoinColumn(name = "tpsecurityToken_id"))
     private Set<TPSecurityToken> tpsecurityTokenList;
-    
+
     public TPItem() {
         this.tpsecurityTokenList = new HashSet<TPSecurityToken>();
         this.paretTPItem = new HashSet<TPItem>();
     }
 
+    // Метод исполняеться при создании
     @PrePersist
     protected void onCreate() {
         this.updatedBy = this.createdBy = CurrentSession.getCurrentUser();
         this.updated = this.created = new Date();
-        
+
     }
-    
+
+    // Метод исполняеться при изменении
     @PreUpdate
     protected void onUpdate() {
         this.updatedBy = CurrentSession.getCurrentUser();
         this.updated = new Date();
     }
 
-    
+    /**
+     * Возвращает уникальный идентефикатор
+     *
+     * @return UUID
+     */
     public UUID getId() {
         return id;
     }
 
+    /**
+     * Задает уникальный идентефикатор
+     *
+     * @param id (UUID)
+     */
     public void setId(UUID id) {
         this.id = id;
     }
 
+    /**
+     * Возвращает наименование
+     *
+     * @return String
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Задает наименование
+     *
+     * @param title (String)
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Возвращает дату создания
+     *
+     * @return (Date)
+     */
     public Date getCreated() {
         return created;
     }
 
+    /**
+     * Задает дату создания
+     *
+     * @param created (Date)
+     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
+    /**
+     * Возвращает дату изменения
+     *
+     * @return (Date)
+     */
     public Date getUpdated() {
         return updated;
     }
 
+    /**
+     * Задает дату изменения
+     *
+     * @param updated (Date)
+     */
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
 
+    /**
+     * Возвращает кем создано
+     *
+     * @return (TPUser)
+     */
     public TPUser getCreatedBy() {
         return createdBy;
     }
 
+    /**
+     * Задает кем создано
+     *
+     * @param createdBy (TPUser)
+     */
     public void setCreatedBy(TPUser createdBy) {
         this.createdBy = createdBy;
     }
 
+    /**
+     * Возвращает кем изменено
+     *
+     * @return (TPUser)
+     */
     public TPUser getUpdatedBy() {
         return updatedBy;
     }
 
+    /**
+     * Задает кем изменено
+     *
+     * @param updatedBy (TPUser)
+     */
     public void setUpdatedBy(TPUser updatedBy) {
         this.updatedBy = updatedBy;
     }
-    
 
+    /**
+     * Возвращает номер версии
+     * @return (Integer)
+     */
     public int getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
+    /**
+     * Возвращает набор родительных обьектов
+     * @return (Set)
+     */
     public Set<TPItem> getParetTPItem() {
         return paretTPItem;
     }
 
+    /**
+     * Задает набор родительных обьектов
+     * @param paretTPItem (Set)
+     */
     public void setParetTPItem(Set<TPItem> paretTPItem) {
         this.paretTPItem = paretTPItem;
     }
 
+    /**
+     * Возвращает набор жетонов безопасности
+     * @return (Set)
+     */
     public Set<TPSecurityToken> getTpsecurityTokenList() {
         return tpsecurityTokenList;
     }
 
+    /**
+     * Задает набор жетонов безопасности
+     * @param tpsecurityTokenList (Set)
+     */
     public void setTpsecurityTokenList(Set<TPSecurityToken> tpsecurityTokenList) {
         this.tpsecurityTokenList = tpsecurityTokenList;
     }
 
+    /**
+     * Возвращает hash обьекта
+     */
     @Override
     public int hashCode() {
         int hash = 0;
