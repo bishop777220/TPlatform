@@ -20,7 +20,8 @@ import com.tsystem.tplatform.security.TPUser;
 @Entity
 @Table(name = "tpithem")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class TPItem implements Serializable {
+@MappedSuperclass
+public abstract class TPItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

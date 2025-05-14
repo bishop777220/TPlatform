@@ -50,7 +50,7 @@ public class TPSecurityToken implements Serializable {
     private TPRole tprole;
 
     public TPSecurityToken() {
-        this.tpitemList = new HashSet<TPItem>();
+        this.tpitemList = new HashSet<>();
     }
 
     public TPSecurityToken(TPSecurityMember tpsecurityMember, TPRole tprole, Set<TPItem> tpitemList) {
@@ -105,10 +105,7 @@ public class TPSecurityToken implements Serializable {
             return false;
         }
         TPSecurityToken other = (TPSecurityToken) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

@@ -31,7 +31,7 @@ public class TPGroup extends TPSecurityMember {
     private Set<TPUser> tpuserList;
     
     public TPGroup() {
-        this.tpuserList = new HashSet<TPUser>();
+        this.tpuserList = new HashSet<>();
     }
 
     public String getDescription() {

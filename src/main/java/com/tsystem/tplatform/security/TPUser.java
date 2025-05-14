@@ -49,7 +49,7 @@ public class TPUser extends TPSecurityMember {
     private Set<TPGroup> tpgroupList;
 
     public TPUser() {
-        this.tpgroupList = new HashSet<TPGroup>();
+        this.tpgroupList = new HashSet<>();
     }
 
     public String getLogin() {
