@@ -1,4 +1,4 @@
-package TWorkflow.sequention;
+package com.tsystem.tplatform.workflow.sequention;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

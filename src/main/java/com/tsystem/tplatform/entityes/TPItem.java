@@ -4,14 +4,16 @@
  */
 package com.tsystem.tplatform.entityes;
 
+import com.tsystem.tplatform.security.TPSecurityToken;
+import com.tsystem.tplatform.security.TPUser;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import com.tsystem.tplatform.security.TPSecurityToken;
-import com.tsystem.tplatform.security.TPUser;
+
+
 
 /**
  *
@@ -75,8 +77,8 @@ public abstract class TPItem implements Serializable {
     private Set<TPSecurityToken> tpsecurityTokenList;
 
     public TPItem() {
-        this.tpsecurityTokenList = new HashSet<TPSecurityToken>();
-        this.paretTPItem = new HashSet<TPItem>();
+        this.tpsecurityTokenList = new HashSet<>();
+        this.paretTPItem = new HashSet<>();
     }
 
     // Метод исполняеться при создании
