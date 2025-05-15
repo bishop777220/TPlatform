@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
@@ -25,7 +26,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "tpsecuritymember")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class TPSecurityMember implements Serializable {
+@MappedSuperclass
+public abstract class TPSecurityMember implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
