@@ -8,6 +8,7 @@ import com.tsystem.tplatform.security.TPSecurityToken;
 import com.tsystem.tplatform.security.TPUser;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,8 +40,7 @@ public abstract class TPItem implements Serializable {
 
     // Когда создано
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private LocalDateTime created;
 
     // Кем создано
     @ManyToOne
@@ -49,8 +49,7 @@ public abstract class TPItem implements Serializable {
 
     // Дата последнего изменения
     @Column(name = "updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+    private LocalDateTime updated;
 
     // Кем изменено
     @ManyToOne
@@ -84,16 +83,16 @@ public abstract class TPItem implements Serializable {
     // Метод исполняеться при создании
     @PrePersist
     protected void onCreate() {
-        this.updatedBy = this.createdBy = CurrentSession.getCurrentUser();
-        this.updated = this.created = new Date();
+        //this.updatedBy = this.createdBy = CurrentSession.getCurrentUser();
+        this.updated = this.created = LocalDateTime.now();
 
     }
 
     // Метод исполняеться при изменении
     @PreUpdate
     protected void onUpdate() {
-        this.updatedBy = CurrentSession.getCurrentUser();
-        this.updated = new Date();
+        //this.updatedBy = CurrentSession.getCurrentUser();
+        this.updated = LocalDateTime.now();
     }
 
     /**
@@ -135,36 +134,36 @@ public abstract class TPItem implements Serializable {
     /**
      * Возвращает дату создания
      *
-     * @return (Date)
+     * @return (LocalDateTime)
      */
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
     /**
      * Задает дату создания
      *
-     * @param created (Date)
+     * @param created (LocalDateTime)
      */
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
     /**
      * Возвращает дату изменения
      *
-     * @return (Date)
+     * @return (LocalDateTime)
      */
-    public Date getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
     /**
      * Задает дату изменения
      *
-     * @param updated (Date)
+     * @param updated (LocalDateTime)
      */
-    public void setUpdated(Date updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 

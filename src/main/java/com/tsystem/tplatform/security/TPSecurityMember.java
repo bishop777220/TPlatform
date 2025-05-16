@@ -42,6 +42,9 @@ public abstract class TPSecurityMember implements Serializable {
     @OneToMany(mappedBy = "tpsecurityMember", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<TPSecurityToken> tpsecurityTokenList;
 
+    public TPSecurityMember() {
+    }
+
     public UUID getId() {
         return id;
     }
